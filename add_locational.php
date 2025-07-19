@@ -87,23 +87,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $applicant_address = trim($_POST['applicant_address']);
         $sql = "INSERT INTO locational_clearances (
-                    applicant_name, applicant_address, developer_name, developer_address, project_location, issue_date, expiration_date, clearance_number,
+                    applicant_name, developer_name, developer_address, project_location, date_filed, expiration_date, clearance_number,
                     project_name, right_over_land, land_area, building_area, decision,
-                    or_number, amount_paid, date_paid, issued_at, encoded_by_user_id,
+                    or_number, fees_paid, encoded_by_user_id,
                     condition1_monitoring, condition2_non_compliance, condition3_other_agencies,
                     condition4_activity_applied_for, condition5_no_major_expansion,
                     condition6_not_cert_ownership, condition7_misrepresentation, condition8_commencement_period,
-                    condition9_revoked, condition10_provisional
+                    condition9_revoked, condition10_provisional, applicant_address, address, issue_date
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "sssssssssssssdssiiiiiiiiiii",
-                $applicant_name, $applicant_address, $developer_name, $developer_address, $project_location, $issue_date, $expiration_date, $clearance_number,
+            mysqli_stmt_bind_param($stmt, "sssssssssssssdsiiiiiiiiiiss",
+                $applicant_name, $developer_name, $developer_address, $project_location, $date_filed, $expiration_date, $clearance_number,
                 $project_name, $right_over_land, $land_area, $building_area, $decision,
-                $or_number, $amount_paid, $date_paid, $issued_at, $encoded_by_user_id,
+                $or_number, $amount_paid, $encoded_by_user_id, $applicant_address, $issue_date,
                 $conditions['condition1'], $conditions['condition2'], $conditions['condition3'], $conditions['condition4'],
-                $conditions['condition5'], $conditions['condition6'], $conditions['condition7'], $conditions['condition8'],
-                $conditions['condition9'], $conditions['condition10']
+                $conditions['condition5'], $conditions['condition6'],
+                $conditions['condition7'], $conditions['condition8'],
+                $conditions['condition9'], $conditions['condition10'],
             );
 
             if (mysqli_stmt_execute($stmt)) {
